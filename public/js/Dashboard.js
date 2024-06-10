@@ -12,6 +12,7 @@ var paused = false
 var confirmReset = 0
 var modals = {};
 var isSaved = false;
+let toggleCalled = false;
 // myModal.addEventListener("shown.bs.modal", () => {
 //   myInput.focus();
 // });
@@ -375,6 +376,11 @@ function atualizarTempoRestanteFrontend() {
   const elapsedTime = (Date.now() - startTime) - pauseTime;
 
   const remainingTime = Math.max(0, (testDuration * 1000) - elapsedTime);
+
+  if (remainingTime < 1 && !toggleCalled) {
+    toggleActivityStart();
+    toggleCalled = true;
+  }
 
   const horas = Math.floor(remainingTime / (testDuration * 1000));
   const minutos = Math.floor((remainingTime % (testDuration * 1000)) / 60000);
